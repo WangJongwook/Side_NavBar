@@ -3,9 +3,15 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-.main-container {
+a{
+  margin: auto
+}
+.big-container {
   display: flex;
+  float: right;
+}
+.main-container {
+  float: right;
 }
 main {
   padding: 10px;
@@ -23,14 +29,15 @@ main {
   color: white;
   height: 100vh;
   overflow-y: auto;
+  width:100px;
   
 }
 
 .top_section {
+  width:50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 10px;
 }
 .logo {
   font-size: 18px;
@@ -79,8 +86,9 @@ main {
   transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 .active {
+  
   border-right: 4px solid white;
-  background: rgb(45, 51, 89);
+  background: rgb(45, 51,s 89);
 }
 .link_text {
   white-space: nowrap;

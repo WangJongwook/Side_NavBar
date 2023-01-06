@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { FaBars, FaHome, FaUser, FaSplotch } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
+import { RiArrowRightSFill } from "react-icons/ri";
 import { BsCartCheck, BsSearch } from "react-icons/bs";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -75,68 +76,69 @@ const SideBar = ({ children }) => {
 
   return (
     <>
-      {/* 토글바 */}
-      <div className="top_section">
-        <div className="bars">
-          <FaBars onClick={toggle} />
+      <div className="big-container">
+        {/* 토글바 */}
+        <div className="top_section">
+          <div className="bars">
+            <RiArrowRightSFill size="50" onClick={toggle} />
+          </div>
         </div>
-      </div>
-      {/* 메인컨테이너 */}
-      <div className="main-container">
-        <motion.div
-          animate={{
-            width: isOpen ? "200px" : "45px",
-
-            transition: {
-              duration: 0.5,
-              type: "spring",
-              damping: 10,
-            },
-          }}
-          className={`sidebar `}
-        >
-          {/* 사이드바 목록  */}
-          <section className="routes">
-            {routes.map((route, index) => {
-              if (route.subRoutes) {
+        {/* 메인컨테이너 */}
+        <div className="main-container">
+          <motion.div
+            animate={{
+              width: isOpen ? "200px" : "90px",
+              transition: {
+                duration: 0.5,
+                type: "spring",
+                damping: 10,
+              },
+            }}
+            className={`sidebar `}
+          >
+            {/* 사이드바 목록  */}
+            <section className="routes">
+              {routes.map((route, index) => {
+                if (route.subRoutes) {
+                  return (
+                    <SidebarMenu
+                      setIsOpen={setIsOpen}
+                      route={route}
+                      showAnimation={showAnimation}
+                      isOpen={isOpen}
+                    />
+                  );
+                }
+                // 애니메이션
                 return (
-                  <SidebarMenu
-                    setIsOpen={setIsOpen}
-                    route={route}
-                    showAnimation={showAnimation}
-                    isOpen={isOpen}
-                  />
+                  <NavLink
+                    to={route.path}
+                    key={index}
+                    className="link"
+                    activeclassname="active"
+                  >
+                    <div className="icon">{route.icon}</div>
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          variants={showAnimation}
+                          initial="hidden"
+                          animate="show"
+                          exit="hidden"
+                          className="link_text"
+                        >
+                          {route.name}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </NavLink>
                 );
-              }
-              // 애니메이션
-              return (
-                <NavLink
-                  to={route.path}
-                  key={index}
-                  className="link"
-                  activeclassname="active"
-                >
-                  <div className="icon">{route.icon}</div>
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        variants={showAnimation}
-                        initial="hidden"
-                        animate="show"
-                        exit="hidden"
-                        className="link_text"
-                      >
-                        {route.name}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </NavLink>
-              );
-            })}
-          </section>
-        </motion.div>
+              })}
+            </section>
+          </motion.div>
 
-        <main>{children}</main>
+          <main>{children}</main>
+        </div>
       </div>
     </>
   );
